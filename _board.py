@@ -28,6 +28,6 @@ class Board:
 
         for row in range(8):
             for col in range(8):
-                currLoc = (loc[0] + col*sqSize, loc[1] + row*sqSize, sqSize, sqSize)
+                currLoc = (loc[0] + col*sqSize, loc[1] + row*sqSize, sqSize+1, sqSize+1)
                 color = BOARD_WHITE if (row + col) % 2 == 0 else BOARD_BLACK
                 pygame.draw.rect(window, color, currLoc)
