@@ -24,16 +24,22 @@ class Board:
     def __init__(self):
         self.position = chess.Board()
         self.flipped = False
+        self.selected = None
 
-    def Draw(self, window, loc, size):
+    def Draw(self, window, events, loc, size):
         sqSize = size / 8
 
+        # Squares
         for row in range(8):
             for col in range(8):
                 currLoc = (loc[0] + col*sqSize, loc[1] + row*sqSize, sqSize+1, sqSize+1)
-                color = BOARD_WHITE if (row + col) % 2 == 0 else BOARD_BLACK
+                if (col, row) == self.selected:
+                    color = BOARD_WHITE_SELECT if (row + col) % 2 == 0 else BOARD_BLACK_SELECT
+                else:
+                    color = BOARD_WHITE if (row + col) % 2 == 0 else BOARD_BLACK
                 pygame.draw.rect(window, color, currLoc)
 
+        # Pieces
         for row in range(8):
             for col in range(8):
                 square = 8*row + (7-col) if self.flipped else 8*(7-row) + col
@@ -43,3 +49,15 @@ class Board:
                     image = pygame.transform.scale(IMAGES[symbol], (int(sqSize*0.9), int(sqSize*0.9)))
                     currLoc = (col*sqSize + sqSize*0.05 + loc[0], row*sqSize + sqSize*0.05 + loc[1])
                     window.blit(image, currLoc)
+
+
+        mousePos = pygame.mouse.get_pos()
+        for event in events:
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    gridLoc = ((mousePos[0]-loc[0]) // sqSize, (mousePos[1]-loc[1]) // sqSize)
+                    if 0 <= gridLoc[0] <= 7 and 0 <= gridLoc[1] <= 7:
+                        if self.selected == gridLoc:
+                            self.selected = None
+                        else:
+                            self.selected = gridLoc
