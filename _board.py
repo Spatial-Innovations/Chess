@@ -16,12 +16,14 @@
 # ##### END GPL LICENSE BLOCK #####
 
 import pygame
+import chess
 from _constants import *
 
 
 class Board:
     def __init__(self):
-        pass
+        self.position = chess.Board()
+        self.flipped = False
 
     def Draw(self, window, loc, size):
         sqSize = size / 8
@@ -31,3 +33,13 @@ class Board:
                 currLoc = (loc[0] + col*sqSize, loc[1] + row*sqSize, sqSize+1, sqSize+1)
                 color = BOARD_WHITE if (row + col) % 2 == 0 else BOARD_BLACK
                 pygame.draw.rect(window, color, currLoc)
+
+        for row in range(8):
+            for col in range(8):
+                square = 8*row + (7-col) if self.flipped else 8*(7-row) + col
+                piece = self.position.piece_at(square)
+                if piece is not None:
+                    symbol = piece.symbol()
+                    image = pygame.transform.scale(IMAGES[symbol], (int(sqSize*0.9), int(sqSize*0.9)))
+                    currLoc = (col*sqSize + sqSize*0.05 + loc[0], row*sqSize + sqSize*0.05 + loc[1])
+                    window.blit(image, currLoc)
