@@ -24,6 +24,8 @@ FPS = 60
 PARENT = os.path.realpath(os.path.dirname(__file__))
 
 BLACK = (0, 0, 0)
+BOARD_WHITE = (255, 255, 230)
+BOARD_BLACK = (100, 150, 80)
 
 IMAGES = {}
 for file in os.listdir(os.path.join(PARENT, "images")):
