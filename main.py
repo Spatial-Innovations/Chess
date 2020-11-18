@@ -17,6 +17,7 @@
 
 import pygame
 from _constants import *
+from _board import Board
 
 
 def Main():
@@ -27,6 +28,7 @@ def Main():
 
     clock = pygame.time.Clock()
     screen = SCREEN[:]
+    board = Board()
     while True:
         clock.tick(FPS)
         pygame.display.update()
@@ -40,6 +42,7 @@ def Main():
                 WINDOW = pygame.display.set_mode(screen, pygame.RESIZABLE)
 
         WINDOW.fill(BLACK)
+        board.Draw(WINDOW, (50, 50), min(screen) - 100)
 
 
 Main()
