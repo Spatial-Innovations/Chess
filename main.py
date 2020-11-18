@@ -36,8 +36,8 @@ def Main():
                 pygame.quit()
                 return
             elif event.type == pygame.VIDEORESIZE:
-                screen = (event.w, event.h)
-                WINDOW = pygame.display.set_mode(screen)
+                screen = (max(event.w, 540), max(event.h, 360))
+                WINDOW = pygame.display.set_mode(screen, pygame.RESIZABLE)
 
         WINDOW.fill(BLACK)
 
