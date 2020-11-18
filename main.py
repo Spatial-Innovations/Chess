@@ -42,7 +42,7 @@ def Main():
                 WINDOW = pygame.display.set_mode(screen, pygame.RESIZABLE)
 
         WINDOW.fill(BLACK)
-        board.Draw(WINDOW, (50, 50), min(screen) - 100)
+        board.Draw(WINDOW, events, (50, 50), min(screen) - 100)
 
 
 Main()
