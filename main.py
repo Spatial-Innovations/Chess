@@ -26,6 +26,7 @@ def Main():
     pygame.display.set_icon(IMAGES["ic"])
     WINDOW = pygame.display.set_mode(SCREEN, pygame.RESIZABLE)
 
+    status = "HOME"
     clock = pygame.time.Clock()
     screen = SCREEN[:]
     board = Board()
@@ -43,6 +44,9 @@ def Main():
 
         WINDOW.fill(BLACK)
         board.Draw(WINDOW, events, (50, 50), min(screen) - 100)
+
+        if status == "HOME":
+            pass
 
 
 Main()
