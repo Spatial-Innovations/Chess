@@ -15,6 +15,7 @@
 #
 # ##### END GPL LICENSE BLOCK #####
 
+import time
 import pygame
 import chess
 from _constants import *
@@ -25,9 +26,11 @@ class Board:
         self.position = chess.Board()
         self.flipped = False
         self.selected = None
+        self.Update()
 
     def Draw(self, window, events, loc, size):
         sqSize = size / 8
+        mousePos = pygame.mouse.get_pos()
 
         # Squares
         for row in range(8):
@@ -50,14 +53,21 @@ class Board:
                     currLoc = (col*sqSize + sqSize*0.05 + loc[0], row*sqSize + sqSize*0.05 + loc[1])
                     window.blit(image, currLoc)
 
-
-        mousePos = pygame.mouse.get_pos()
+        # Update selection
+        """
         for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
                     gridLoc = ((mousePos[0]-loc[0]) // sqSize, (mousePos[1]-loc[1]) // sqSize)
-                    if 0 <= gridLoc[0] <= 7 and 0 <= gridLoc[1] <= 7:
-                        if self.selected == gridLoc:
-                            self.selected = None
-                        else:
-                            self.selected = gridLoc
+                    if self.selected is None:
+                        if 0 <= gridLoc[0] <= 7 and 0 <= gridLoc[1] <= 7:
+                            if self.selected == gridLoc:
+                                self.selected = None
+                            else:
+                                self.selected = gridLoc
+                    else:
+                        pass
+        """
+
+    def Update(self):
+        self.legalMoves = list(self.position.generate_legal_moves())
